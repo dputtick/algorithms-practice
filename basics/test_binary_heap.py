@@ -67,13 +67,6 @@ def test_perc_down():
 def test_perc_up():
     assert True
 
-#def test_naive_build_heap():
-#    heap = BinaryHeap()
-#    heap.heap_list = [0, 1, 2, 3, 5, 23, 120]
-#    heap.current_size = 6
-#    is_valid_heap(heap)
-
-
 
 # helper functions here
 
