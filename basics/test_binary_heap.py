@@ -13,8 +13,16 @@ heaps = {
 
 unsorted_lists = list(itertools.permutations([1, 2, 3]))
 
+def make_valid_heaps():
+    valid_heaps = []
+    for permutation in unsorted_lists:
+        heap = BinaryHeap()
+        for item in permutation:
+            heap.insert(item)
+        valid_heaps.append(heap)
+    return valid_heaps
 
-
+valid_heaps = make_valid_heaps()
 
 
 def test_empty_heap():
@@ -31,12 +39,14 @@ def test_simple_heaps_build():
 
 def test_manually_constructed_heaps():
     for permutation in unsorted_lists:
-        heap = BinaryHeap()
-        for item in permutation:
-            heap.insert(item)
+        heap = naive_construct_heap(permutation)
         is_valid_heap(heap)
 
-
+def test_get_from_heaps():
+    for heap in valid_heaps:
+        is_valid_heap(heap)
+        heap.get()
+        is_valid_heap(heap)
 
 
 def test_valid_heaps():
@@ -105,6 +115,11 @@ def get_child_indices(heap, index):
     else:
         return (None, None)
 
+def naive_construct_heap(alist):
+    new_heap = BinaryHeap()
+    for number in alist:
+        new_heap.insert(number)
+    return new_heap
 
 
 # I can either have a function that returns True or False if I have a valid heap
