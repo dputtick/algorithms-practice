@@ -54,11 +54,11 @@ def test_get_from_heaps():
 
 def test_valid_heaps():
     heap = BinaryHeap()
-    heap.heap_list = [0, 1, 2, 3]
+    heap._list = [0, 1, 2, 3]
     heap.current_size = 3
     is_valid_heap(heap)
     heap2 = BinaryHeap()
-    heap2.heap_list = [0, 1, 2, 3, 4]
+    heap2._list = [0, 1, 2, 3, 4]
     heap2.current_size = 4
     is_valid_heap(heap2)
 
@@ -71,7 +71,7 @@ def test_min_child():
 
 def test_perc_down():
     heap = BinaryHeap()
-    heap.heap_list = [0, 1, 100, 2]
+    heap._list = [0, 1, 100, 2]
     heap.current_size = 3
     heap._perc_down(1)
     is_valid_heap(heap)
@@ -79,7 +79,7 @@ def test_perc_down():
 
 def test_perc_up():
     heap = BinaryHeap()
-    heap.heap_list = [0, 100, 101, 1]
+    heap._list = [0, 100, 101, 1]
     heap.current_size = 4
     heap._perc_up(3)
     is_valid_heap
@@ -91,21 +91,15 @@ def is_valid_heap(heap):
     n_single_child = 0
     n_leafs = 0
     for parent_index in range(1, heap.current_size + 1):
-        child1, child2 = get_child_indices(heap, parent_index)
-        if child1:
-            assert heap.heap_list[child1] >= heap.heap_list[parent_index]
-            if child2:
-                # do the stuff for two children
-                assert heap.heap_list[child2] >= heap.heap_list[parent_index]
-            else:
-                # do the stuff for one child
-                n_single_child += 1
-        else:
-            # do the stuff for no children
+        children = get_child_indices(heap, parent_index)
+        for child in children:
+            assert heap._list[child] >= heap._list[parent_index]
+        if not children:
             n_leafs += 1
+        elif len(children) == 1:
+            n_single_child += 1
     assert n_single_child <= 1
-    nearest_power_of_two = heap.current_size // 2
-    assert n_leafs == len(heap.heap_list[nearest_power_of_two + 1:])
+    assert n_leafs == len(heap._list[heap.current_size // 2 + 1:])
 
 
 def can_assert_true(thing):
@@ -121,9 +115,9 @@ def get_child_indices(heap, index):
         if child_2 <= heap.current_size:
             return (child_1, child_2)
         else:
-            return (child_1, None)
+            return (child_1,)
     else:
-        return (None, None)
+        return ()
 
 def naive_construct_heap(alist):
     new_heap = BinaryHeap()
