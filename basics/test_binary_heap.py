@@ -5,6 +5,9 @@ import random as r
 from binary_heap import BinaryHeap
 
 
+skip = pytest.mark.skip
+xfail = pytest.mark.xfail
+
 heaps = {
     'built empty': BinaryHeap([]),
     'empty': BinaryHeap(),
@@ -30,7 +33,7 @@ def test_empty_heap():
     is_valid_heap(heap)
 
 
-@pytest.mark.skip
+@xfail
 def test_simple_heaps_build():
     for permutation in unsorted_lists:
         heap = BinaryHeap(permutation)
@@ -42,6 +45,7 @@ def test_manually_constructed_heaps():
         heap = naive_construct_heap(permutation)
         is_valid_heap(heap)
 
+@xfail
 def test_get_from_heaps():
     for heap in valid_heaps:
         is_valid_heap(heap)
@@ -59,6 +63,11 @@ def test_valid_heaps():
     heap2.current_size = 4
     is_valid_heap(heap2)
 
+
+def test_min_child():
+    heap = naive_construct_heap([1, 2, 3])
+    min_child = heap._min_child(1)
+    assert min_child == 2
 
 def test_perc_down():
     assert True

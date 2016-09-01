@@ -22,14 +22,16 @@ class BinaryHeap:
     def _perc_down(self, curr_index):
         child_index = curr_index * 2
         while child_index <= self.current_size:
-            minchild = self._min_child(child_index)
-            self.heap_list[minchild], self.heap_list[curr_index] = (
-                self.heap_list[curr_index], self.heap_list[minchild])
-            curr_index = minchild
+            index_of_min_child = self._min_child(curr_index)
+            self.heap_list[index_of_min_child], self.heap_list[curr_index] = (
+                self.heap_list[curr_index], self.heap_list[index_of_min_child])
+            curr_index = index_of_min_child
             child_index = curr_index * 2
 
-    def _min_child(self, first_child_i):
+    def _min_child(self, parent_i):
+        first_child_i = parent_i * 2
         second_child_i = first_child_i + 1
+        print(first_child_i, second_child_i)
         if second_child_i > self.current_size:
             return first_child_i
         else:
