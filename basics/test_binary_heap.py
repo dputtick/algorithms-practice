@@ -33,7 +33,6 @@ def test_empty_heap():
     is_valid_heap(heap)
 
 
-@xfail
 def test_simple_heaps_build():
     for permutation in unsorted_lists:
         heap = BinaryHeap(permutation)
@@ -45,7 +44,7 @@ def test_manually_constructed_heaps():
         heap = naive_construct_heap(permutation)
         is_valid_heap(heap)
 
-@xfail
+
 def test_get_from_heaps():
     for heap in valid_heaps:
         is_valid_heap(heap)
@@ -69,12 +68,21 @@ def test_min_child():
     min_child = heap._min_child(1)
     assert min_child == 2
 
+
 def test_perc_down():
-    assert True
+    heap = BinaryHeap()
+    heap.heap_list = [0, 1, 100, 2]
+    heap.current_size = 3
+    heap._perc_down(1)
+    is_valid_heap(heap)
 
 
 def test_perc_up():
-    assert True
+    heap = BinaryHeap()
+    heap.heap_list = [0, 100, 101, 1]
+    heap.current_size = 4
+    heap._perc_up(3)
+    is_valid_heap
 
 
 # helper functions here
@@ -124,8 +132,15 @@ def naive_construct_heap(alist):
     return new_heap
 
 
+
+
 # I can either have a function that returns True or False if I have a valid heap
 # and then uses asserts to check whether various things are giving me valid heaps
 # OR
 # I can have a master test_if_heap function that checks all the ways a heap can fail
 # and I can programatically generate various heaps and see whether those pass
+
+
+# list of properties of a heap, test each property individually
+# how do I think of examples - random examples, simple examples that are easy to follow
+# debugging: use the debugger, add comments for every line, think of the simplest possible test case

@@ -20,18 +20,20 @@ class BinaryHeap:
             parent_index = curr_index // 2
 
     def _perc_down(self, curr_index):
-        child_index = curr_index * 2
-        while child_index <= self.current_size:
-            index_of_min_child = self._min_child(curr_index)
-            self.heap_list[index_of_min_child], self.heap_list[curr_index] = (
-                self.heap_list[curr_index], self.heap_list[index_of_min_child])
-            curr_index = index_of_min_child
-            child_index = curr_index * 2
+        first_child_index = curr_index * 2
+        while first_child_index <= self.current_size:
+            i_of_min_child = self._min_child(curr_index)
+            if self.heap_list[curr_index] > self.heap_list[i_of_min_child]:
+                self.heap_list[i_of_min_child], self.heap_list[curr_index] = (
+                self.heap_list[curr_index], self.heap_list[i_of_min_child])
+            else:
+                break
+            curr_index = i_of_min_child
+            first_child_index = curr_index * 2
 
     def _min_child(self, parent_i):
         first_child_i = parent_i * 2
         second_child_i = first_child_i + 1
-        print(first_child_i, second_child_i)
         if second_child_i > self.current_size:
             return first_child_i
         else:
@@ -62,7 +64,7 @@ class BinaryHeap:
         index = 1
         count = 2
         retval = ''
-        while index < self.current_size:
+        while index <= self.current_size:
             retval += (str(self.heap_list[index:count]) + '\n')
             index = count
             count = index * 2
@@ -76,8 +78,3 @@ if __name__ == '__main__':
     heap.build_heap([2, 30, 1, 4])
     print(heap.heap_list)
     print(heap)
-
-
-# list of properties of a heap, test each property individually
-# how do I think of examples - random examples, simple examples that are easy to follow
-# debugging: use the debugger, add comments for every line, think of the simplest possible test case
