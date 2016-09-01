@@ -1,14 +1,14 @@
 class BinaryHeap:
     def __init__(self, inputlist=None):
         self._list = [0]
-        self.current_size = 0
+        self._size = 0
         if inputlist:
             self.build_heap(inputlist)
 
     def insert(self, value):
         self._list.append(value)
-        self.current_size += 1
-        self._perc_up(self.current_size)
+        self._size += 1
+        self._perc_up(self._size)
 
     def _perc_up(self, i):
         parent_i = i // 2
@@ -21,7 +21,7 @@ class BinaryHeap:
 
     def _perc_down(self, i):
         first_child_index = i * 2
-        while first_child_index <= self.current_size:
+        while first_child_index <= self._size:
             min_child_i = self._min_child(i)
             if self._list[i] > self._list[min_child_i]:
                 self._list[min_child_i], self._list[i] = (
@@ -34,7 +34,7 @@ class BinaryHeap:
     def _min_child(self, parent_i):
         first_child_i = parent_i * 2
         second_child_i = first_child_i + 1
-        if second_child_i > self.current_size:
+        if second_child_i > self._size:
             return first_child_i
         else:
             if self._list[second_child_i] < self._list[first_child_i]:
@@ -45,14 +45,14 @@ class BinaryHeap:
     def get(self):
         min_value = self._list[1]
         self._list[1] = self._list.pop()
-        self.current_size -= 1
+        self._size -= 1
         self._perc_down(1)
         return min_value
 
     def build_heap(self, values):
         new_values = list(values)
-        self.current_size = len(new_values)
-        i = self.current_size // 2
+        self._size = len(new_values)
+        i = self._size // 2
         self._list = [0] + new_values
         while i > 0:
             self._perc_down(i)
@@ -62,7 +62,7 @@ class BinaryHeap:
         index = 1
         count = 2
         retval = ''
-        while index <= self.current_size:
+        while index <= self._size:
             retval += (str(self._list[index:count]) + '\n')
             index = count
             count = index * 2

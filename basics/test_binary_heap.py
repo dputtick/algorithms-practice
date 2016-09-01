@@ -55,11 +55,11 @@ def test_get_from_heaps():
 def test_valid_heaps():
     heap = BinaryHeap()
     heap._list = [0, 1, 2, 3]
-    heap.current_size = 3
+    heap._size = 3
     is_valid_heap(heap)
     heap2 = BinaryHeap()
     heap2._list = [0, 1, 2, 3, 4]
-    heap2.current_size = 4
+    heap2._size = 4
     is_valid_heap(heap2)
 
 
@@ -72,7 +72,7 @@ def test_min_child():
 def test_perc_down():
     heap = BinaryHeap()
     heap._list = [0, 1, 100, 2]
-    heap.current_size = 3
+    heap._size = 3
     heap._perc_down(1)
     is_valid_heap(heap)
 
@@ -80,7 +80,7 @@ def test_perc_down():
 def test_perc_up():
     heap = BinaryHeap()
     heap._list = [0, 100, 101, 1]
-    heap.current_size = 4
+    heap._size = 4
     heap._perc_up(3)
     is_valid_heap
 
@@ -90,7 +90,7 @@ def test_perc_up():
 def is_valid_heap(heap):
     n_single_child = 0
     n_leafs = 0
-    for parent_index in range(1, heap.current_size + 1):
+    for parent_index in range(1, heap._size + 1):
         children = get_child_indices(heap, parent_index)
         for child in children:
             assert heap._list[child] >= heap._list[parent_index]
@@ -99,7 +99,7 @@ def is_valid_heap(heap):
         elif len(children) == 1:
             n_single_child += 1
     assert n_single_child <= 1
-    assert n_leafs == len(heap._list[heap.current_size // 2 + 1:])
+    assert n_leafs == len(heap._list[heap._size // 2 + 1:])
 
 
 def can_assert_true(thing):
@@ -111,8 +111,8 @@ def can_assert_false(thing):
 def get_child_indices(heap, index):
     child_1 = index * 2
     child_2 = child_1 + 1
-    if child_1 <= heap.current_size:
-        if child_2 <= heap.current_size:
+    if child_1 <= heap._size:
+        if child_2 <= heap._size:
             return (child_1, child_2)
         else:
             return (child_1,)
