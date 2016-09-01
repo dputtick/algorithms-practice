@@ -55,8 +55,6 @@ class BinaryHeap:
         curr_index = self.current_size // 2
         self.heap_list = [0] + new_values
         while curr_index > 0:
-            print(curr_index)
-            print(self)
             self._perc_down(curr_index)
             curr_index -= 1
 
