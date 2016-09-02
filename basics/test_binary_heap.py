@@ -80,9 +80,9 @@ def test_perc_down():
 def test_perc_up():
     heap = BinaryHeap()
     heap._list = [0, 100, 101, 1]
-    heap._size = 4
+    heap._size = 3
     heap._perc_up(3)
-    is_valid_heap
+    is_valid_heap(heap)
 
 
 # helper functions here
